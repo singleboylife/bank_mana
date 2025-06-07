@@ -88,7 +88,7 @@ void SavingsAccount::settle(const Date& date) {
     if (date.getMonth() == 1 && date.getDay() == 1) {
         double interest = acc.getSum(date) * rate / 366; // 计算年利息
         if (interest != 0)
-            record(date, interest, "interest");
+            record(date, interest, " interest");
         acc.reset(date, getBalance());
     }
 }
@@ -134,13 +134,13 @@ void CreditAccount::settle(const Date& date) {
         // 计算上月欠款总额
         interest = acc.getSum(date) * rate;
         if (interest != 0)
-            record(date, -interest, "interest");
+            record(date, -interest, " interest");
         acc.reset(date, getDebt());
     }
 
     // 每年1月1日收取年费
     if (date.getMonth() == 1 && date.getDay() == 1) {
-        record(date, -fee, "annual fee");
+        record(date, -fee, " annual fee");
     }
 }
 
