@@ -5,8 +5,24 @@
 
 using namespace std;
 
+// 实现AccountRecord类
+AccountRecord::AccountRecord(const Date& date, const Account* account, double amount, double balance, const std::string& desc)
+    : date(date), account(account), amount(amount), balance(balance), desc(desc) {
+}
+
+void AccountRecord::show() const {
+    date.show();
+    cout << "\t#" << account->getId() << "\t";
+    if (amount >= 0)
+        cout << setw(7) << left << amount;
+    else
+        cout << "-" << setw(6) << left << -amount;
+    cout << "\t" << setw(7) << left << balance << "\t" << desc << endl;
+}
+
 // 实现Account类的静态成员和构造函数
 double Account::total = 0;
+std::multimap<Date, AccountRecord> Account::recordMap;
 
 Account::Account(const Date& date, const std::string& id) : id(id), balance(0) {
 }
@@ -15,6 +31,10 @@ void Account::record(const Date& date, double amount, const std::string& desc) {
     amount = floor(amount * 100 + 0.5) / 100; // 保留小数点后两位
     balance += amount;
     total += amount;
+
+    // 创建并添加账目记录
+    AccountRecord record(date, this, amount, balance, desc);
+    recordMap.insert(make_pair(date, record));
 
     // 打印交易记录
     cout << date;
@@ -32,6 +52,15 @@ void Account::error(const std::string& msg) const {
 
 void Account::show() const {
     cout << id << "\tBalance: " << balance;
+}
+
+// 查询指定日期范围内的账目
+void Account::query(const Date& begin, const Date& end) {
+    multimap<Date, AccountRecord>::iterator iter;
+
+    for (iter = recordMap.lower_bound(begin); iter != recordMap.upper_bound(end); ++iter) {
+        iter->second.show();
+    }
 }
 
 // 实现SavingsAccount类

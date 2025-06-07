@@ -4,12 +4,36 @@
 #include "date.h"
 #include "accumulator.h"
 #include <string>
+#include <map>
+
+class Account; // 前向声明
+
+// 账目记录
+class AccountRecord {
+private:
+    Date date;          // 日期
+    double amount;      // 金额
+    double balance;     // 余额
+    std::string desc;   // 描述
+    const Account* account; // 账户指针
+
+public:
+    // 构造函数
+    AccountRecord(const Date& date, const Account* account, double amount, double balance, const std::string& desc);
+
+    // 显示账目记录
+    void show() const;
+
+    // 获取账目金额
+    double getAmount() const { return amount; }
+};
 
 class Account { // 账户类
 private:
     std::string id;      // 账户ID
     double balance;      // 账户余额
     static double total; // 所有账户的总金额
+    static std::multimap<Date, AccountRecord> recordMap; // 所有账户的账目记录
 
 protected:
     // 供派生类调用的构造函数
@@ -26,6 +50,8 @@ public:
     double getBalance() const { return balance; }
     // 获取所有账户的总金额
     static double getTotal() { return total; }
+    // 查询指定日期范围内的账目
+    static void query(const Date& begin, const Date& end);
     // 存入现金 - 纯虚函数
     virtual void deposit(const Date& date, double amount, const std::string& desc) = 0;
     // 取出现金 - 纯虚函数

@@ -27,6 +27,10 @@ Date::Date(int year, int month, int day) : year(year), month(month), day(day) {
     totalDays += day;
 }
 
+Date::Date()
+{
+}
+
 int Date::getYear() const {
     return year;
 }
@@ -55,6 +59,19 @@ int Date::distance(const Date& date) const {
 
 void Date::show() const {
     cout << year << "-" << month << "-" << day;
+}
+
+// 重载<运算符，用于日期比较
+bool Date::operator<(const Date& date) const {
+    return totalDays < date.totalDays;
+}
+
+// 静态方法，从输入读取日期
+Date Date::read() {
+    int year, month, day;
+    char separator;
+    cin >> year >> separator >> month >> separator >> day;
+    return Date(year, month, day);
 }
 
 // 日期转换为字符串
