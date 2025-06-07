@@ -10,25 +10,25 @@ SavingsAccount::SavingsAccount(const Date& date, const std::string& accountId, d
     std::cout << date.toString()
         << "\t#" << id << " created" << std::endl;
     balanceHistory.push_back(std::make_pair(date, 0));
-    descriptions.push_back("");
+    descriptions.push_back(""); 
 }
 
 
 void SavingsAccount::printBalance(double amount) const {
-
-    int amountCents = (int)(amount * 100 + 0.5);
-    int secondDecimal = amountCents % 10;
+    
+    int amountCents = (int)(amount * 100 + 0.5); 
+    int secondDecimal = amountCents % 10; 
 
     if (amountCents % 100 == 0) {
-
+        
         std::cout << "#" << id << "\tBalance: " << std::fixed << std::setprecision(0) << amount;
     }
     else if (secondDecimal < 5) {
-
+     
         std::cout << "#" << id << "\tBalance: " << std::fixed << std::setprecision(1) << amount;
     }
     else {
-
+       
         std::cout << "#" << id << "\tBalance: " << std::fixed << std::setprecision(2) << amount;
     }
 }
@@ -73,7 +73,7 @@ void SavingsAccount::settle(const Date& date) {
     balance += interest;
     total += interest; // 更新总金额
 
-
+    
     std::cout << date.toString()
         << "\t#" << id << "\t";
 
@@ -95,15 +95,15 @@ void SavingsAccount::settle(const Date& date) {
     std::cout << std::setw(7) << std::right;
 
     if (balanceCents % 100 == 0) {
-
+        
         std::cout << std::setprecision(0) << std::fixed << balance;
     }
     else if (secondDecimal < 5) {
-
+       
         std::cout << std::setprecision(1) << std::fixed << balance;
     }
     else {
-
+        
         std::cout << std::setprecision(2) << std::fixed << balance;
     }
 
@@ -132,7 +132,7 @@ double SavingsAccount::calculateInterest(const Date& settlementDate) const {
     if (days > 0) {
         weightedSum += days * balanceHistory.back().second;
     }
-
+    
     return (weightedSum * rate) / 366.0;
 }
 

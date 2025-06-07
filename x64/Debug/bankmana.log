@@ -1,4 +1,6 @@
 ﻿  account.cpp
+  date.cpp
+D:\Users\user\source\repos\bankmana\bankmana\date.cpp(81,5): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   源.cpp
   正在生成代码...
   bankmana.vcxproj -> D:\Users\user\source\repos\bankmana\x64\Debug\bankmana.exe
