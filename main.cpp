@@ -192,6 +192,7 @@ public:
         for (auto& enemy : enemies) {
             enemy.update();
         }
+<<<<<<< fixv2
 
         // 移除无效敌机
         enemies.erase(
@@ -200,6 +201,16 @@ public:
             enemies.end()
         );
 
+=======
+
+        // 移除无效敌机
+        enemies.erase(
+            std::remove_if(enemies.begin(), enemies.end(),
+                [](const Enemy& e) { return !e.active; }),
+            enemies.end()
+        );
+
+>>>>>>> local
         checkCollisions();
     }
 
@@ -251,7 +262,11 @@ int main() {
 
         game.update();
         game.draw();
+<<<<<<< fixv2
 
+=======
+        FlushBatchDraw();
+>>>>>>> local
         Sleep(16);
     }
     EndBatchDraw();
